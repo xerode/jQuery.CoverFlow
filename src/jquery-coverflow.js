@@ -22,7 +22,14 @@
 	};
 
 	// Plugin properties default values
-	var defaults = {};
+	var defaults = {
+		stagePerspective: 800,
+		xSpread: 200,
+		xGap: 200,
+		zSpread: 400,
+		zGap: 200,
+		angle: 45
+	};
 
 	// Plugin properties
 	$.fn.coverflow.settings = {};
