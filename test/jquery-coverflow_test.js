@@ -33,6 +33,18 @@
 		strictEqual( this.elems.coverflow(), this.elems, 'should be chainable' );
 	} );
 
+	test( 'plugin settings extends plugin defaults', function() {
+		expect( 6 );
+		//
+		this.elems.coverflow( '#COVERFLOW' );
+		strictEqual( 800, this.elems.coverflow.settings.stagePerspective, 'should be 800' );
+		strictEqual( 200, this.elems.coverflow.settings.xSpread, 'should be 200' );
+		strictEqual( 200, this.elems.coverflow.settings.xGap, 'should be 200' );
+		strictEqual( 400, this.elems.coverflow.settings.zSpread, 'should be 400' );
+		strictEqual( 200, this.elems.coverflow.settings.zGap, 'should be 200' );
+		strictEqual( 45, this.elems.coverflow.settings.angle, 'should be 45' );
+	} );
+
 	/*
 	module( 'jQuery#awesome', {
 		// This will run before each test in this module.
