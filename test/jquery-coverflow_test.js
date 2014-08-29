@@ -45,23 +45,25 @@
 		strictEqual( 45, this.elems.coverflow.settings.angle, 'should be 45' );
 	} );
 
-	test( 'plugin settings overwrites plugin defaults', function() {
-		expect( 6 );
-		//
-		this.elems.coverflow( '#COVERFLOW', {
+	test( 'plugin settings overrides plugin defaults', function() {
+
+		var options = {
 			stagePerspective: 400,
 			xSpread: 100,
 			xGap: 100,
 			zSpread: 200,
 			zGap: 100,
 			angle: 22.5
-		} );
-		strictEqual( 400, this.elems.coverflow.settings.stagePerspective, 'should be 400' );
-		strictEqual( 100, this.elems.coverflow.settings.xSpread, 'should be 100' );
-		strictEqual( 100, this.elems.coverflow.settings.xGap, 'should be 100' );
-		strictEqual( 200, this.elems.coverflow.settings.zSpread, 'should be 200' );
-		strictEqual( 100, this.elems.coverflow.settings.zGap, 'should be 100' );
-		strictEqual( 22.5, this.elems.coverflow.settings.angle, 'should be 22.5' );
+		};
+
+		expect( Object.keys( options ).length );
+
+		this.elems.coverflow( '#COVERFLOW', options );
+
+		for( var k in options ) {
+			strictEqual( options[ k ], this.elems.coverflow.settings[ k ], 'should be ' + options[ k ] );
+		}
+
 	} );
 
 	/*
