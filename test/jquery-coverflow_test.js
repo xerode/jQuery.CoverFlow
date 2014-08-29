@@ -20,6 +20,20 @@
 			throws(block, [expected], [message])
 	*/
 
+	module( 'jQuery#coverflow', {
+		// This will run before each test in this module.
+		setup: function() {
+			this.elems = $( '#qunit-fixture' ).children();
+		}
+	} );
+
+	test( 'is chainable', function() {
+		expect( 1 );
+		// Not a bad test to run on collection methods.
+		strictEqual( this.elems.coverflow(), this.elems, 'should be chainable' );
+	} );
+
+	/*
 	module( 'jQuery#awesome', {
 		// This will run before each test in this module.
 		setup: function() {
@@ -58,5 +72,6 @@
 		// Use deepEqual & .get() when comparing jQuery objects.
 		deepEqual( this.elems.filter( ':awesome' ).get(), this.elems.last().get(), 'knows awesome when it sees it' );
 	});
+	*/
 
 } ( jQuery ) );

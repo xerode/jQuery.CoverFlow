@@ -42,7 +42,7 @@
 
 	function init( options ) {
 		$.fn.coverflow.settings = $.extend( defaults, options );
-	};
+	}
 
 	//
 
