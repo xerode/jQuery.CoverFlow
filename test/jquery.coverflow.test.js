@@ -66,6 +66,12 @@
 
 	} );
 
+	test( 'currentItem is available through an accessor method', function() {
+		expect( 1 );
+		// Not a bad test to run on collection methods.
+		strictEqual( 0, this.elems.coverflow( 'getCurrentItem' ), 'should be 0' );
+	} );
+
 	/*
 	module( 'jQuery#awesome', {
 		// This will run before each test in this module.

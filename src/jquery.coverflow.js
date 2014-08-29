@@ -10,10 +10,16 @@
 
 	$.fn.coverflow = function( action, options ) {
 
+		var rtn;
+
 		switch( action ) {
 
 			case 'init':
 				init( options );
+				break;
+
+			case 'getCurrentItem':
+				rtn = currentItem;
 				break;
 
 			default:
@@ -21,9 +27,16 @@
 
 		}
 
+		if( rtn != null ) {
+			return rtn;
+		}
+
 		return this;
 
 	};
+
+	// Private plugin properties
+	var currentItem = 0;
 
 	// Plugin properties default values
 	var defaults = {
@@ -35,10 +48,10 @@
 		angle: 45
 	};
 
-	// Plugin properties
+	// Public plugin properties
 	$.fn.coverflow.settings = {};
 
-	// Plugin private methods
+	// Private plugin methods
 
 	function init( options ) {
 		$.fn.coverflow.settings = $.extend( defaults, options );
