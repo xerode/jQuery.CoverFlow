@@ -1,0 +1,28 @@
+{
+  "name": "jquery-coverflow",
+  "title": "CoverFlow jQuery Plugin",
+  "description": "iTunes-style coverflow using jQuery and CSS3",
+  "version": "0.0.1",
+  "homepage": "https://github.com/xerode/jQuery.CoverFlow",
+  "author": {
+    "name": "Paul Bennett",
+    "url": "https://github.com/xerode"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xerode/jQuery.CoverFlow"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "OSL",
+      "url": "http://opensource.org/licenses/OSL"
+    }
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  },
+  "keywords": [
+    "jquery-plugin"
+  ]
+}
