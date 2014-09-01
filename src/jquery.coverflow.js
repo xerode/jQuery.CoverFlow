@@ -43,6 +43,10 @@
 					af.prevItem();
 					break;
 
+				case 'resize':
+					af.resize( this );
+					break;
+
 				default:
 					init( options );
 
@@ -88,6 +92,15 @@
 
 		this.prevItem = function() {
 			currentItem -= 1;
+		};
+
+		this.resize = function( elem ) {
+			$( elem ).children().each( function( i, el ) {
+				$( el ).css( 'left', ( $( elem ).innerWidth() * 0.5 ) + 'px' );
+				$( el ).css( 'top', ( $( elem ).innerHeight() * 0.5 ) + 'px' );
+				$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
+				$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) + 'px' );
+			} );
 		};
 
 	//
