@@ -69,6 +69,8 @@
 			stagePerspective: 800,
 			xSpread: 200,
 			xGap: 200,
+			ySpread: 0,
+			yGap: 0,
 			zSpread: 400,
 			zGap: 200,
 			angle: 45,
