@@ -8,42 +8,56 @@
 
 ( function( $ ) {
 
+	// 'af' used for anonymous function, helps with scoping from within $.fn.coverflow
+	var af = this;
+
 	$.fn.coverflow = function( action, options ) {
 
 		var rtn;
 
-		switch( action ) {
+		// support multiple elements
+			if( this.length > 1 ) {
+				this.each( function() {
+					$( this ).coverflow( action, options );
+				} );
+				return this;
+			}
 
-			case 'init':
-				init( options );
-				break;
+		//
 
-			case 'getCurrentItem':
-				rtn = currentItem;
-				break;
+			switch( action ) {
 
-			case 'nextItem':
-				currentItem += 1;
-				break;
+				case 'init':
+					init( options );
+					break;
 
-			case 'prevItem':
-				currentItem -= 1;
-				break;
+				case 'getCurrentItem':
+					rtn = currentItem;
+					break;
 
-			default:
-				init( options );
+				case 'nextItem':
+					af.nextItem();
+					break;
 
-		}
+				case 'prevItem':
+					af.prevItem();
+					break;
 
-		if( rtn !== undefined ) {
-			return rtn;
-		}
+				default:
+					init( options );
 
-		return this;
+			}
+
+			if( rtn !== undefined ) {
+				return rtn;
+			}
+
+			return this;
 
 	};
 
 	// Private plugin properties
+
 		var currentItem = 0;
 
 		// Plugin properties default values
