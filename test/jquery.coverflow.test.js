@@ -34,7 +34,7 @@
 	} );
 
 	test( 'plugin settings extends plugin defaults', function() {
-		expect( 6 );
+		expect( 7 );
 		//
 		this.elems.coverflow( '#COVERFLOW' );
 		strictEqual( this.elems.coverflow.settings.stagePerspective, 800, 'should be 800' );
@@ -43,6 +43,7 @@
 		strictEqual( this.elems.coverflow.settings.zSpread, 400, 'should be 400' );
 		strictEqual( this.elems.coverflow.settings.zGap, 200, 'should be 200' );
 		strictEqual( this.elems.coverflow.settings.angle, 45, 'should be 45' );
+		strictEqual( this.elems.coverflow.settings.animationDuration, 500, 'should be 500' );
 	} );
 
 	test( 'plugin settings overrides plugin defaults', function() {
@@ -53,7 +54,8 @@
 			xGap: 100,
 			zSpread: 200,
 			zGap: 100,
-			angle: 22.5
+			angle: 22.5,
+			animationDuration: 1000
 		};
 
 		expect( Object.keys( options ).length );

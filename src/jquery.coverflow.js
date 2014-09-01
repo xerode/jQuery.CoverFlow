@@ -67,7 +67,8 @@
 			xGap: 200,
 			zSpread: 400,
 			zGap: 200,
-			angle: 45
+			angle: 45,
+			animationDuration: 500
 		};
 
 	// Public plugin properties
