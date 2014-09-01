@@ -37,12 +37,12 @@
 		expect( 6 );
 		//
 		this.elems.coverflow( '#COVERFLOW' );
-		strictEqual( 800, this.elems.coverflow.settings.stagePerspective, 'should be 800' );
-		strictEqual( 200, this.elems.coverflow.settings.xSpread, 'should be 200' );
-		strictEqual( 200, this.elems.coverflow.settings.xGap, 'should be 200' );
-		strictEqual( 400, this.elems.coverflow.settings.zSpread, 'should be 400' );
-		strictEqual( 200, this.elems.coverflow.settings.zGap, 'should be 200' );
-		strictEqual( 45, this.elems.coverflow.settings.angle, 'should be 45' );
+		strictEqual( this.elems.coverflow.settings.stagePerspective, 800, 'should be 800' );
+		strictEqual( this.elems.coverflow.settings.xSpread, 200, 'should be 200' );
+		strictEqual( this.elems.coverflow.settings.xGap, 200, 'should be 200' );
+		strictEqual( this.elems.coverflow.settings.zSpread, 400, 'should be 400' );
+		strictEqual( this.elems.coverflow.settings.zGap, 200, 'should be 200' );
+		strictEqual( this.elems.coverflow.settings.angle, 45, 'should be 45' );
 	} );
 
 	test( 'plugin settings overrides plugin defaults', function() {
@@ -61,7 +61,7 @@
 		this.elems.coverflow( '#COVERFLOW', options );
 
 		for( var k in options ) {
-			strictEqual( options[ k ], this.elems.coverflow.settings[ k ], 'should be ' + options[ k ] );
+			strictEqual( this.elems.coverflow.settings[ k ], options[ k ], 'should be ' + options[ k ] );
 		}
 
 	} );
@@ -69,7 +69,21 @@
 	test( 'currentItem is available through an accessor method', function() {
 		expect( 1 );
 		// Not a bad test to run on collection methods.
-		strictEqual( 0, this.elems.coverflow( 'getCurrentItem' ), 'should be 0' );
+		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
+	} );
+
+	test( 'nextItem is available as a public method and updates currentItem', function() {
+		expect( 1 );
+
+		this.elems.coverflow( 'nextItem' );
+		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
+	} );
+
+	test( 'prevItem is available as a public method and updates currentItem', function() {
+		expect( 1 );
+
+		this.elems.coverflow( 'prevItem' );
+		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
 	} );
 
 	/*

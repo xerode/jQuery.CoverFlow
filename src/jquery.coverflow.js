@@ -22,12 +22,20 @@
 				rtn = currentItem;
 				break;
 
+			case 'nextItem':
+				currentItem += 1;
+				break;
+
+			case 'prevItem':
+				currentItem -= 1;
+				break;
+
 			default:
 				init( options );
 
 		}
 
-		if( rtn != null ) {
+		if( rtn !== undefined ) {
 			return rtn;
 		}
 
@@ -36,26 +44,36 @@
 	};
 
 	// Private plugin properties
-	var currentItem = 0;
+		var currentItem = 0;
 
-	// Plugin properties default values
-	var defaults = {
-		stagePerspective: 800,
-		xSpread: 200,
-		xGap: 200,
-		zSpread: 400,
-		zGap: 200,
-		angle: 45
-	};
+		// Plugin properties default values
+		var defaults = {
+			stagePerspective: 800,
+			xSpread: 200,
+			xGap: 200,
+			zSpread: 400,
+			zGap: 200,
+			angle: 45
+		};
 
 	// Public plugin properties
-	$.fn.coverflow.settings = {};
+		$.fn.coverflow.settings = {};
 
 	// Private plugin methods
 
-	function init( options ) {
-		$.fn.coverflow.settings = $.extend( defaults, options );
-	}
+		function init( options ) {
+			$.fn.coverflow.settings = $.extend( defaults, options );
+		}
+
+	// Public methods
+
+		this.nextItem = function() {
+			currentItem += 1;
+		};
+
+		this.prevItem = function() {
+			currentItem -= 1;
+		};
 
 	//
 
