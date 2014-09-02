@@ -35,18 +35,20 @@
 
 	test( 'plugin settings extends plugin defaults', function() {
 
-		expect( 9 );
+		expect( 11 );
 
 		this.elems.coverflow();
 
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.stagePerspective, 800, 'should be 800' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xSpread, 200, 'should be 200' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xGap, 200, 'should be 200' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xAngle, 0, 'should be 0' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.ySpread, 0, 'should be 0' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.yGap, 0, 'should be 0' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.yAngle, 45, 'should be 45' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zSpread, 400, 'should be 400' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zGap, 200, 'should be 200' );
-		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.angle, 45, 'should be 45' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zAngle, 0, 'should be 0' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.animationDuration, 500, 'should be 500' );
 
 	} );
@@ -57,11 +59,13 @@
 			stagePerspective: 400,
 			xSpread: 100,
 			xGap: 100,
+			xAngle: 45,
 			ySpread: 100,
 			yGap: 100,
+			yAngle: 22.5,
 			zSpread: 200,
 			zGap: 100,
-			angle: 22.5,
+			zAngle: 45,
 			animationDuration: 1000
 		};
 

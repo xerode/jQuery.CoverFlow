@@ -15,11 +15,13 @@
 		stagePerspective: 800,
 		xSpread: 200,
 		xGap: 200,
+		xAngle: 0,
 		ySpread: 0,
 		yGap: 0,
+		yAngle: 45,
 		zSpread: 400,
 		zGap: 200,
-		angle: 45,
+		zAngle: 0,
 		animationDuration: 500,
 		autoResize: true
 	};
@@ -51,7 +53,7 @@
 
 			if( this.settings.autoResize === true ) {
 				$( window ).resize( function() {
-					resize( this.element );
+					this.resize( this.element );
 				} );
 			}
 
