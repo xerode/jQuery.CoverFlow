@@ -6,142 +6,128 @@
  * Licensed under the OSL license.
  */
 
-( function( $, window, undefined ) {
+// the semi-colon before function invocation is a safety net against concatenated scripts and/or other plugins which may not be closed properly.
+;( function ( $, window, document, undefined ) {
 
-	// 'af' used for anonymous function, helps with scoping from within $.fn.coverflow
-	var af = this;
+	// Create the defaults once
+	var pluginName = 'coverflow',
+	defaults = {
+		stagePerspective: 800,
+		xSpread: 200,
+		xGap: 200,
+		ySpread: 0,
+		yGap: 0,
+		zSpread: 400,
+		zGap: 200,
+		angle: 45,
+		animationDuration: 500,
+		autoResize: true
+	};
 
-	$.fn.coverflow = function( action, options ) {
+	// The actual plugin constructor
+	function Plugin( element, options ) {
 
-		var rtn;
+		// Private properties
+			this._currentItem = 0;
 
-		// support multiple elements
-			if( this.length > 1 ) {
-				this.each( function() {
-					$( this ).coverflow( action, options );
+			this._defaults = defaults;
+			this._name = pluginName;
+
+		// Public properties
+			this.element = element;
+			this.settings = $.extend( {}, defaults, options );
+
+		this.init();
+
+	}
+
+	Plugin.prototype = {
+
+		init: function () {
+
+		// Place initialization logic here
+		// You already have access to the DOM element and the options via the instance,
+		// e.g., this.element and this.options
+
+		},
+
+		// Public methods
+
+			getCurrentItem: function() {
+				return this._currentItem;
+			},
+
+			nextItem: function() {
+				this._currentItem += 1;
+			},
+
+			prevItem: function() {
+				this._currentItem -= 1;
+			},
+
+			resize: function( elem ) {
+				$( elem ).children().each( function( i, el ) {
+					$( el ).css( 'left', ( $( elem ).innerWidth() * 0.5 ) + 'px' );
+					$( el ).css( 'top', ( $( elem ).innerHeight() * 0.5 ) + 'px' );
+					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
+					$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) + 'px' );
 				} );
-				return this;
 			}
-
-		//
-
-			switch( action ) {
-
-				case 'init':
-					init( this, options );
-					break;
-
-				case 'getCurrentItem':
-					rtn = currentItem;
-					break;
-
-				case 'nextItem':
-					af.nextItem();
-					break;
-
-				case 'prevItem':
-					af.prevItem();
-					break;
-
-				case 'resize':
-					af.resize( this );
-					break;
-
-				default:
-					init( options );
-
-			}
-
-			if( rtn !== undefined ) {
-				return rtn;
-			}
-
-			return this;
 
 	};
 
-	// Private plugin properties
+	// You don't need to change something below:
+	// A really lightweight plugin wrapper around the constructor, preventing against multiple instantiations and allowing any public function (ie. a function whose name doesn't start with an underscore) to be called via the jQuery plugin,
+	// e.g. $(element).defaultPluginName('functionName', arg1, arg2)
+	$.fn[ pluginName ] = function ( options ) {
 
-		var currentItem = 0;
+		var args = arguments;
 
-		// Plugin properties default values
-		var defaults = {
-			stagePerspective: 800,
-			xSpread: 200,
-			xGap: 200,
-			ySpread: 0,
-			yGap: 0,
-			zSpread: 400,
-			zGap: 200,
-			angle: 45,
-			animationDuration: 500,
-			autoResize: true
-		};
+		// Is the first parameter an object (options), or was omitted, instantiate a new instance of the plugin.
+		if( options === undefined || typeof options === 'object' ) {
 
-	// Public plugin properties
-		$.fn.coverflow.settings = {};
+			return this.each( function () {
 
-	// Private plugin methods
+				// Only allow the plugin to be instantiated once, so we check that the element has no plugin instantiation yet
+				if( ! $.data( this, 'plugin_' + pluginName ) ) {
 
-		function init( elem, options ) {
-			$.fn.coverflow.settings = $.extend( defaults, options );
+					// if it has no instance, create a new one, pass options to our plugin constructor and store the plugin instance in the elements jQuery data object.
 
-			if( $.fn.coverflow.settings.autoResize === true ) {
-				$( window ).resize = function() {
-					af.resize( elem );
+					$.data( this, 'plugin_' + pluginName, new Plugin( this, options ) );
+
 				}
-			}
-		}
 
-	// Public methods
-
-		this.nextItem = function( dur ) {
-			currentItem += 1;
-		};
-
-		this.prevItem = function( dur ) {
-			currentItem -= 1;
-		};
-
-		this.resize = function( elem ) {
-			$( elem ).children().each( function( i, el ) {
-				$( el ).css( 'left', ( $( elem ).innerWidth() * 0.5 ) + 'px' );
-				$( el ).css( 'top', ( $( elem ).innerHeight() * 0.5 ) + 'px' );
-				$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
-				$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) + 'px' );
 			} );
-		};
+		// If the first parameter is a string and it doesn't start with an underscore or "contains" the `init`-function, treat this as a call to a public method.
+		} else if( typeof options === 'string' && options[ 0 ] !== '_' && options !== 'init' ) {
 
-	//
+			// Cache the method call
+			// to make it possible
+			// to return a value
+			var returns;
 
-	// Generated by 'yo jquery'
-	/*
-	// Collection method.
-	$.fn.awesome = function() {
-		return this.each( function( i ) {
-			// Do something awesome to each selected element.
-			$( this ).html( 'awesome' + i );
-		} );
+			this.each( function() {
+
+				var instance = $.data( this, 'plugin_' + pluginName );
+
+				// Tests that there's already a plugin-instance and checks that the requested public method exists
+				if( instance instanceof Plugin && typeof instance[ options ] === 'function' ) {
+
+					// Call the method of our plugin instance and pass it the supplied arguments.
+					returns = instance[ options ].apply( instance, Array.prototype.slice.call( args, 1 ) );
+
+				}
+
+				// Allow instances to be destroyed via the 'destroy' method
+				if( options === 'destroy' ) {
+					$.data( this, 'plugin_' + pluginName, null );
+				}
+
+			} );
+
+			// If the earlier cached method gives a value back return the value, otherwise return this to preserve chainability.
+			return returns !== undefined ? returns : this;
+		}
 	};
 
-	// Static method.
-	$.awesome = function( options ) {
-		// Override default options with passed-in options.
-		options = $.extend( {}, $.awesome.options, options );
-		// Return something awesome.
-		return 'awesome' + options.punctuation;
-	};
-
-	// Static method default options.
-	$.awesome.options = {
-		punctuation: '.'
-	};
-
-	// Custom selector.
-	$.expr[ ':' ].awesome = function( elem ) {
-		// Is this element awesome?
-		return $( elem ).text().indexOf( 'awesome' ) !== -1;
-	};
-	*/
-
-}( jQuery, window ) );
+}( jQuery, window, document ) );

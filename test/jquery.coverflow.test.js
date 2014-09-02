@@ -1,4 +1,4 @@
-( function( $ ) {
+;( function ( $, window, document, undefined ) {
 	/*
 		======== A Handy Little QUnit Reference ========
 		http://api.qunitjs.com/
@@ -23,7 +23,7 @@
 	module( 'jQuery#coverflow', {
 		// This will run before each test in this module.
 		setup: function() {
-			this.elems = $( '#qunit-fixture' ).children();
+			this.elems = $( '#COVERFLOW' );
 		}
 	} );
 
@@ -34,18 +34,21 @@
 	} );
 
 	test( 'plugin settings extends plugin defaults', function() {
+
 		expect( 9 );
-		//
-		this.elems.coverflow( '#COVERFLOW' );
-		strictEqual( this.elems.coverflow.settings.stagePerspective, 800, 'should be 800' );
-		strictEqual( this.elems.coverflow.settings.xSpread, 200, 'should be 200' );
-		strictEqual( this.elems.coverflow.settings.xGap, 200, 'should be 200' );
-		strictEqual( this.elems.coverflow.settings.ySpread, 0, 'should be 0' );
-		strictEqual( this.elems.coverflow.settings.yGap, 0, 'should be 0' );
-		strictEqual( this.elems.coverflow.settings.zSpread, 400, 'should be 400' );
-		strictEqual( this.elems.coverflow.settings.zGap, 200, 'should be 200' );
-		strictEqual( this.elems.coverflow.settings.angle, 45, 'should be 45' );
-		strictEqual( this.elems.coverflow.settings.animationDuration, 500, 'should be 500' );
+
+		this.elems.coverflow();
+
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.stagePerspective, 800, 'should be 800' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xSpread, 200, 'should be 200' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xGap, 200, 'should be 200' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.ySpread, 0, 'should be 0' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.yGap, 0, 'should be 0' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zSpread, 400, 'should be 400' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zGap, 200, 'should be 200' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.angle, 45, 'should be 45' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.animationDuration, 500, 'should be 500' );
+
 	} );
 
 	test( 'plugin settings overrides plugin defaults', function() {
@@ -64,23 +67,26 @@
 
 		expect( Object.keys( options ).length );
 
-		this.elems.coverflow( '#COVERFLOW', options );
+		this.elems.coverflow( options );
 
 		for( var k in options ) {
-			strictEqual( this.elems.coverflow.settings[ k ], options[ k ], 'should be ' + options[ k ] );
+			strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings[ k ], options[ k ], 'should be ' + options[ k ] );
 		}
 
 	} );
 
 	test( 'currentItem is available through an accessor method', function() {
 		expect( 1 );
-		// Not a bad test to run on collection methods.
+
+		this.elems.coverflow();
+
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
 	} );
 
 	test( 'nextItem is available as a public method and updates currentItem', function() {
 		expect( 1 );
 
+		this.elems.coverflow();
 		this.elems.coverflow( 'nextItem' );
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
 	} );
@@ -88,8 +94,9 @@
 	test( 'prevItem is available as a public method and updates currentItem', function() {
 		expect( 1 );
 
+		this.elems.coverflow();
 		this.elems.coverflow( 'prevItem' );
-		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
+		strictEqual( this.elems.coverflow( 'getCurrentItem' ), -1, 'should be -1' );
 	} );
 
 	/*
@@ -133,4 +140,4 @@
 	});
 	*/
 
-} ( jQuery ) );
+}( jQuery, window, document ) );
