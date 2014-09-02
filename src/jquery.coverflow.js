@@ -88,11 +88,11 @@
 
 	// Public methods
 
-		this.nextItem = function() {
+		this.nextItem = function( dur ) {
 			currentItem += 1;
 		};
 
-		this.prevItem = function() {
+		this.prevItem = function( dur ) {
 			currentItem -= 1;
 		};
 
