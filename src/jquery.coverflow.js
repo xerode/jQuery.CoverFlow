@@ -49,6 +49,12 @@
 		// You already have access to the DOM element and the options via the instance,
 		// e.g., this.element and this.options
 
+			if( this.settings.autoResize === true ) {
+				$( window ).resize( function() {
+					resize( this.element );
+				} );
+			}
+
 		},
 
 		// Public methods
