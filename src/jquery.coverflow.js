@@ -6,7 +6,7 @@
  * Licensed under the OSL license.
  */
 
-( function( $ ) {
+( function( $, window, undefined ) {
 
 	// 'af' used for anonymous function, helps with scoping from within $.fn.coverflow
 	var af = this;
@@ -28,7 +28,7 @@
 			switch( action ) {
 
 				case 'init':
-					init( options );
+					init( this, options );
 					break;
 
 				case 'getCurrentItem':
@@ -74,7 +74,8 @@
 			zSpread: 400,
 			zGap: 200,
 			angle: 45,
-			animationDuration: 500
+			animationDuration: 500,
+			autoResize: true
 		};
 
 	// Public plugin properties
@@ -82,8 +83,14 @@
 
 	// Private plugin methods
 
-		function init( options ) {
+		function init( elem, options ) {
 			$.fn.coverflow.settings = $.extend( defaults, options );
+
+			if( $.fn.coverflow.settings.autoResize === true ) {
+				$( window ).resize = function() {
+					af.resize( elem );
+				}
+			}
 		}
 
 	// Public methods
@@ -137,4 +144,4 @@
 	};
 	*/
 
-}( jQuery ) );
+}( jQuery, window ) );
