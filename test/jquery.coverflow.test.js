@@ -29,7 +29,7 @@
 
 	test( 'is chainable', function() {
 		expect( 1 );
-		// Not a bad test to run on collection methods.
+
 		strictEqual( this.elems.coverflow(), this.elems, 'should be chainable' );
 	} );
 
@@ -79,7 +79,7 @@
 
 	} );
 
-	test( 'currentItem is available through an accessor method', function() {
+	test( 'currentItem is available through a public accessor method', function() {
 		expect( 1 );
 
 		this.elems.coverflow();

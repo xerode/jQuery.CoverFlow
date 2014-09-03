@@ -39,17 +39,15 @@
 			this.element = element;
 			this.settings = $.extend( {}, defaults, options );
 
-		this.init();
+
+		// Fire off init() method
+			this.init();
 
 	}
 
 	Plugin.prototype = {
 
 		init: function () {
-
-		// Place initialization logic here
-		// You already have access to the DOM element and the options via the instance,
-		// e.g., this.element and this.options
 
 			if( this.settings.autoResize === true ) {
 				$( window ).resize( function() {
@@ -98,20 +96,15 @@
 
 				// Only allow the plugin to be instantiated once, so we check that the element has no plugin instantiation yet
 				if( ! $.data( this, 'plugin_' + pluginName ) ) {
-
 					// if it has no instance, create a new one, pass options to our plugin constructor and store the plugin instance in the elements jQuery data object.
-
 					$.data( this, 'plugin_' + pluginName, new Plugin( this, options ) );
-
 				}
 
 			} );
 		// If the first parameter is a string and it doesn't start with an underscore or "contains" the `init`-function, treat this as a call to a public method.
 		} else if( typeof options === 'string' && options[ 0 ] !== '_' && options !== 'init' ) {
 
-			// Cache the method call
-			// to make it possible
-			// to return a value
+			// Cache the method call to make it possible to return a value
 			var returns;
 
 			this.each( function() {
