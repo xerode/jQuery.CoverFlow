@@ -89,7 +89,7 @@
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
 	} );
 
-	test( 'nextItem is available as a public method and updates currentItem', function() {
+	test( 'nextItem() is available as a public method and updates currentItem', function() {
 		expect( 1 );
 
 		this.elems.coverflow();
@@ -97,12 +97,26 @@
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
 	} );
 
-	test( 'prevItem is available as a public method and updates currentItem', function() {
+	test( 'prevItem() is available as a public method and updates currentItem', function() {
 		expect( 1 );
 
 		this.elems.coverflow();
 		this.elems.coverflow( 'prevItem' );
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), -1, 'should be -1' );
+	} );
+
+	test( 'resize() is available as a public method and can be overridden', function() {
+		expect( 2 );
+
+		this.elems.coverflow();
+		strictEqual( this.elems.coverflow( 'resize' ), this.elems, 'should be chainable' );
+
+		$( this.elems ).data( 'plugin_coverflow' ).resize = function() {
+			return true;
+		};
+
+		strictEqual( this.elems.coverflow( 'resize' ), true, 'should be true' );
+
 	} );
 
 }( jQuery, window, document ) );
