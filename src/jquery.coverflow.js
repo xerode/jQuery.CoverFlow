@@ -23,7 +23,8 @@
 		zGap: 200,
 		zAngle: 0,
 		animationDuration: 500,
-		autoResize: true
+		autoResize: true,
+		cssItemClass: 'cf-item'
 	};
 
 	// The actual plugin constructor
@@ -72,7 +73,7 @@
 			},
 
 			resize: function( elem ) {
-				$( elem ).children().each( function( i, el ) {
+				$( elem ).children( '.' + this.settings.cssItemClass ).each( function( i, el ) {
 					$( el ).css( 'left', ( $( elem ).innerWidth() * 0.5 ) + 'px' );
 					$( el ).css( 'top', ( $( elem ).innerHeight() * 0.5 ) + 'px' );
 					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
