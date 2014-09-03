@@ -66,10 +66,17 @@
 
 			nextItem: function() {
 				this._currentItem += 1;
+				this._broadcast( {
+					type: 'complete'
+				} );
+
 			},
 
 			prevItem: function() {
 				this._currentItem -= 1;
+				this._broadcast( {
+					type: 'complete'
+				} );
 			},
 
 			resize: function( elem ) {
@@ -79,6 +86,25 @@
 					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
 					$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) + 'px' );
 				} );
+			},
+
+		// Private methods
+
+			// Hacky way to dispatch an event with some defaults
+			_broadcast: function( options ) {
+
+				console.log( 'throwing' );
+
+				$( this.element ).trigger( $.extend(
+					{},
+					{
+						type: 'event',
+						currentItem: this._currentItem,
+						time: new Date()
+					},
+					options
+				) );
+
 			}
 
 	};

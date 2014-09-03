@@ -89,20 +89,39 @@
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
 	} );
 
-	test( 'nextItem() is available as a public method and updates currentItem', function() {
-		expect( 1 );
+	asyncTest( 'nextItem() is available as a public method, updates currentItem and throws a "complete" event', function() {
+		expect( 2 );
+
+		var scp = this;
 
 		this.elems.coverflow();
+
+		this.elems.on( 'complete', function( e ) {
+			console.log( 'caught' );
+			strictEqual( scp.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
+			strictEqual( e.currentItem, 1, 'should be 1' );
+			QUnit.start();
+		} );
+
 		this.elems.coverflow( 'nextItem' );
-		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
+
 	} );
 
-	test( 'prevItem() is available as a public method and updates currentItem', function() {
-		expect( 1 );
+	asyncTest( 'prevItem() is available as a public method, updates currentItem and throws a "complete" event', function() {
+		expect( 2 );
+
+		var scp = this;
 
 		this.elems.coverflow();
+
+		this.elems.on( 'complete', function( e ) {
+			console.log( 'caught' );
+			strictEqual( scp.elems.coverflow( 'getCurrentItem' ), -1, 'should be -1' );
+			strictEqual( e.currentItem, -1, 'should be -1' );
+			QUnit.start();
+		} );
+
 		this.elems.coverflow( 'prevItem' );
-		strictEqual( this.elems.coverflow( 'getCurrentItem' ), -1, 'should be -1' );
 	} );
 
 	test( 'resize() is available as a public method and can be overridden', function() {
