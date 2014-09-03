@@ -50,9 +50,15 @@
 
 		init: function () {
 
+			var scp = this;
+
+			// Sets perspective to value stored in settings
+			$( this.element ).css( 'perspective', this.settings.stagePerspective + 'px' );
+
+			// Adds handler to automatically resize and redraw coverflow if window resizes
 			if( this.settings.autoResize === true ) {
 				$( window ).resize( function() {
-					this.resize( this.element );
+					scp.resize( this.element );
 				} );
 			}
 
@@ -118,6 +124,36 @@
 					ye: ye,
 					ze: ze
 				};
+
+			},
+
+			changePerspective: function( to, dur ) {
+
+				var from = Number( $( this.element ).css( 'perspective' ).replace(/[^-\d\.]/g, '') ) || 0,
+				scp = this;
+
+				$( this.element )
+					.animate( {
+						persp: to - from
+					},
+					{
+						step: function( now ) {
+
+							$( scp.element ).css( 'perspective', ( from + now ) + 'px' );
+
+						},
+						duration: dur || this.animationDuration,
+						easing: 'swing',
+						complete: function() {
+
+							scp._broadcast( {
+								type: 'perspective_animation_complete',
+								stagePerspective: $( scp.element ).css( 'perspective' )
+							} );
+
+						}
+					}
+					);
 
 			},
 

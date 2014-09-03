@@ -136,4 +136,17 @@
 
 	} );
 
+	asyncTest( 'changePerspective() is available as a public method, updates element perspective CSS and throws a "perspective_animation_complete" event', function() {
+		expect( 1 );
+
+		this.elems.coverflow();
+
+		this.elems.on( 'perspective_animation_complete', function( e ) {
+			strictEqual( e.stagePerspective, '400px', 'should be 400px' );
+			QUnit.start();
+		} );
+
+		this.elems.coverflow( 'changePerspective', 400, 250 );
+	} );
+
 }( jQuery, window, document ) );
