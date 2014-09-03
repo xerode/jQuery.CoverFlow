@@ -88,12 +88,43 @@
 				} );
 			},
 
+			getCoords: function( pos ) {
+
+				var xp = 0,
+				yp = 0,
+				zp = 0,
+				xe = 0,
+				ye = 0,
+				ze = 0,
+				theta = 0,
+				items = $( this.element ).children( '.' + this.settings.cssItemClass ).length;
+
+				if( pos < 0 ) {
+					theta = Math.max( pos, -1 );
+				} else if( pos > 0 ) {
+					theta = Math.min( pos, 1 );
+				}
+
+				xp = ( this.settings.xSpread / items * pos ) + ( this.settings.xGap * theta );
+				zp = ( this.settings.zSpread / items * Math.abs( pos ) * -1 ) - ( this.settings.zGap * Math.abs( theta ) );
+
+				ye = theta * this.settings.yAngle * -1;
+
+				return {
+					xp: xp,
+					yp: yp,
+					zp: zp,
+					xe: xe,
+					ye: ye,
+					ze: ze
+				};
+
+			},
+
 		// Private methods
 
 			// Hacky way to dispatch an event with some defaults
 			_broadcast: function( options ) {
-
-				console.log( 'throwing' );
 
 				$( this.element ).trigger( $.extend(
 					{},
