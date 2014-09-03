@@ -97,7 +97,6 @@
 		this.elems.coverflow();
 
 		this.elems.on( 'complete', function( e ) {
-			console.log( 'caught' );
 			strictEqual( scp.elems.coverflow( 'getCurrentItem' ), 1, 'should be 1' );
 			strictEqual( e.currentItem, 1, 'should be 1' );
 			QUnit.start();
@@ -115,7 +114,6 @@
 		this.elems.coverflow();
 
 		this.elems.on( 'complete', function( e ) {
-			console.log( 'caught' );
 			strictEqual( scp.elems.coverflow( 'getCurrentItem' ), -1, 'should be -1' );
 			strictEqual( e.currentItem, -1, 'should be -1' );
 			QUnit.start();
