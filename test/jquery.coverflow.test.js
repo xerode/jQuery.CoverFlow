@@ -39,7 +39,7 @@
 
 		this.elems.coverflow();
 
-		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.stagePerspective, 800, 'should be 800' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.stagePerspective, 1600, 'should be 800' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xSpread, 200, 'should be 200' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xGap, 200, 'should be 200' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.xAngle, 0, 'should be 0' );
