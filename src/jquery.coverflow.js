@@ -24,7 +24,8 @@
 		zAngle: 0,
 		animationDuration: 500,
 		autoResize: true,
-		cssItemClass: 'cf-item'
+		cssItemClass: 'cf-item',
+		easing: 'swing'
 	};
 
 	// The actual plugin constructor
@@ -94,7 +95,57 @@
 				} );
 			},
 
-			getCoords: function( pos ) {
+			draw: function() {
+
+				var scp = this;
+
+				$( '.artwork' ).each( function( i, elem ) {
+					var trans = scp.getTransform( i - scp._currentItem );
+					elem.css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' ).css( 'cf-position', i );
+				} );
+
+			},
+
+			animate: function( amount, dur ) {
+
+				var scp = this,
+				nextCurrent = this._currentItem + amount,
+				items = $( this.element ).children( '.' + this.settings.cssItemClass ).length,
+				newValue = 0;
+
+				$( $( this.element ).children( '.' + this.settings.cssItemClass ) ).each( function( i, elem ) {
+
+					newValue = Number( elem.css( 'cf-position' ) ) + amount;
+
+					$( elem )
+						.animate( {
+							'cf-position': newValue
+						},
+						{
+							step: function( now ) {
+
+								var cp = i - scp._currentItem - now,
+								trans = scp.getTransform( cp );
+								$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' );
+
+							},
+							duration: dur || scp.animationDuration,
+							easing: scp.settings.easing,
+							complete: function() {
+
+								if( i == items - 1 ) {
+									currentItem = nextCurrent;
+									scp._broadcast( 'complete' );
+								}
+
+							}
+						}
+					);
+				} );
+
+			},
+
+			getTransform: function( pos ) {
 
 				var xp = 0,
 				yp = 0,

@@ -35,7 +35,7 @@
 
 	test( 'plugin settings extends plugin defaults', function() {
 
-		expect( 12 );
+		expect( 13 );
 
 		this.elems.coverflow();
 
@@ -51,6 +51,7 @@
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.zAngle, 0, 'should be 0' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.animationDuration, 500, 'should be 500' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.cssItemClass, 'cf-item', 'should be "cf-item"' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.easing, 'swing', 'should be "swing"' );
 
 	} );
 
@@ -68,7 +69,8 @@
 			zGap: 100,
 			zAngle: 45,
 			animationDuration: 1000,
-			cssItemClass: 'custom-cf-item'
+			cssItemClass: 'custom-cf-item',
+			easing: 'linear'
 		};
 
 		expect( Object.keys( options ).length );
