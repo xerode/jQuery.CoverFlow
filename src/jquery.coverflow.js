@@ -12,7 +12,7 @@
 	// Create the defaults once
 	var pluginName = 'coverflow',
 	defaults = {
-		stagePerspective: 800,
+		stagePerspective: 1600,
 		xSpread: 200,
 		xGap: 200,
 		xAngle: 0,
@@ -63,6 +63,9 @@
 				} );
 			}
 
+			this.draw();
+			this.resize();
+
 		},
 
 		// Public methods
@@ -87,11 +90,13 @@
 			},
 
 			resize: function( elem ) {
-				$( elem ).children( '.' + this.settings.cssItemClass ).each( function( i, el ) {
-					$( el ).css( 'left', ( $( elem ).innerWidth() * 0.5 ) + 'px' );
-					$( el ).css( 'top', ( $( elem ).innerHeight() * 0.5 ) + 'px' );
-					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) + 'px' );
-					$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) + 'px' );
+				console.log( 'what ' + ( $( this.element ).innerWidth() * 0.5 ) );
+
+				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, el ) {
+					$( el ).css( 'left', '50%' );
+					$( el ).css( 'top', '50%' );
+					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) );
+					$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) );
 				} );
 			},
 
@@ -99,9 +104,12 @@
 
 				var scp = this;
 
-				$( '.artwork' ).each( function( i, elem ) {
+				console.log( 'draw' );
+
+				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, elem ) {
+
 					var trans = scp.getTransform( i - scp._currentItem );
-					elem.css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' ).css( 'cf-position', i );
+					$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' ); // .css( 'cf-position', i )
 				} );
 
 			},
@@ -133,8 +141,8 @@
 							easing: scp.settings.easing,
 							complete: function() {
 
-								if( i == items - 1 ) {
-									currentItem = nextCurrent;
+								if( i === items - 1 ) {
+									scp._currentItem = nextCurrent;
 									scp._broadcast( 'complete' );
 								}
 
