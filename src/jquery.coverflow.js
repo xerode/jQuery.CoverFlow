@@ -90,7 +90,7 @@
 			},
 
 			resize: function( elem ) {
-				console.log( 'what ' + ( $( this.element ).innerWidth() * 0.5 ) );
+				// console.log( 'what ' + ( $( this.element ).innerWidth() * 0.5 ) );
 
 				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, el ) {
 					$( el ).css( 'left', '50%' );
@@ -104,7 +104,7 @@
 
 				var scp = this;
 
-				console.log( 'draw' );
+				// console.log( 'draw' );
 
 				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, elem ) {
 
