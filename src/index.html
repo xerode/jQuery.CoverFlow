@@ -6,31 +6,68 @@
 		<script src="../bower_components/jquery/dist/jquery.js"></script>
 		<script src="jquery.coverflow.js"></script>
 	</head>
+	<style>
+		#COVERFLOW {
+			width: 100%;
+			height: 400px;
+			margin: 0;
+			padding: 0;
+			border: 1px solid black;
+			perspective: 1200px;
+			transform-style: preserve-3d;
+		}
+
+		.cf-item {
+			width: 250px;
+			height: 250px;
+			position: absolute;
+			transform-style: preserve-3d;
+			top: 50%;
+			left: 50%;
+			opacity: 0.5;
+		}
+
+		.cf-item img {
+			border: 1px solid red;
+		}
+	</style>
 	<body>
-		<div id="qunit"></div>
-		<div id="qunit-fixture">
+		<div>
 			<div id="COVERFLOW">
-				<div>
-					<p>Coverflow item #1</p>
-				</div>
-				<div>
-					<p>Coverflow item #2</p>
-				</div>
-				<div>
-					<p>Coverflow item #3</p>
-				</div>
-				<div>
-					<p>Coverflow item #4</p>
-				</div>
-				<div>
-					<p>Coverflow item #5</p>
-				</div>
+				<div class="cf-item"><img src="img/artwork000.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork001.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork002.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork003.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork004.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork000.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork001.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork002.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork003.jpg" class="thumbnail" width="250" height="250" /></div>
+				<div class="cf-item"><img src="img/artwork004.jpg" class="thumbnail" width="250" height="250" /></div>
 			</div>
 		</div>
+		<ul>
+			<li><button id="NEXT">Next</button></li>
+			<li><button id="PREV">Previous</button></li>
+			<li><button id="RESET">Back to 0</button></li>
+		</ul>
 		<script>
 			$( document ).ready( function() {
-				console.log( 'ready' );
 				$( '#COVERFLOW' ).coverflow();
+				$( '#NEXT' ).click( function( e ) {
+
+					$( '#COVERFLOW' ).coverflow( 'animate', 2 );
+
+					e.preventDefault();
+
+				} );
+				$( '#PREV' ).click( function( e ) {
+
+					$( '#COVERFLOW' ).coverflow( 'animate', -2 );
+
+					e.preventDefault();
+
+				} );
 			} );
 		</script>
 	</body>
