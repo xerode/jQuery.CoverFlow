@@ -22,6 +22,7 @@
 			height: 250px;
 			position: absolute;
 			transform-style: preserve-3d;
+			transform-origin: top left;
 			top: 50%;
 			left: 50%;
 			opacity: 0.5;
@@ -50,20 +51,28 @@
 			<li><button id="NEXT">Next</button></li>
 			<li><button id="PREV">Previous</button></li>
 			<li><button id="RESET">Back to 0</button></li>
+			<li><button id="PERSPECTIVE">Change perspective</button></li>
 		</ul>
 		<script>
 			$( document ).ready( function() {
 				$( '#COVERFLOW' ).coverflow();
 				$( '#NEXT' ).click( function( e ) {
 
-					$( '#COVERFLOW' ).coverflow( 'animate', 2 );
+					$( '#COVERFLOW' ).coverflow( 'animate', 1, 1000 );
 
 					e.preventDefault();
 
 				} );
 				$( '#PREV' ).click( function( e ) {
 
-					$( '#COVERFLOW' ).coverflow( 'animate', -2 );
+					$( '#COVERFLOW' ).coverflow( 'animate', -1, 1000 );
+
+					e.preventDefault();
+
+				} );
+				$( '#PERSPECTIVE' ).click( function( e ) {
+
+					$( '#COVERFLOW' ).coverflow( 'changePerspective', 400, 4000 );
 
 					e.preventDefault();
 

@@ -63,8 +63,8 @@
 				} );
 			}
 
-			this.draw();
 			this.resize();
+			this.draw();
 
 		},
 
@@ -89,7 +89,7 @@
 				} );
 			},
 
-			resize: function( elem ) {
+			resize: function() {
 				// console.log( 'what ' + ( $( this.element ).innerWidth() * 0.5 ) );
 
 				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, el ) {
@@ -98,6 +98,7 @@
 					$( el ).children().css( 'margin-left', ( $( el ).innerWidth() * -0.5 ) );
 					$( el ).children().css( 'margin-top', ( $( el ).innerHeight() * -0.5) );
 				} );
+
 			},
 
 			draw: function() {
@@ -109,31 +110,36 @@
 				$( this.element ).children( '.' + this.settings.cssItemClass ).each( function( i, elem ) {
 
 					var trans = scp.getTransform( i - scp._currentItem );
-					$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' ); // .css( 'cf-position', i )
+					$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' );
+
 				} );
 
 			},
 
 			animate: function( amount, dur ) {
 
+				// console.log( 'animate' );
+
 				var scp = this,
 				nextCurrent = this._currentItem + amount,
-				items = $( this.element ).children( '.' + this.settings.cssItemClass ).length,
-				newValue = 0;
+				items = $( this.element ).children( '.' + this.settings.cssItemClass ).length;
+				// newValue = 0;
 
 				$( $( this.element ).children( '.' + this.settings.cssItemClass ) ).each( function( i, elem ) {
 
-					newValue = Number( elem.css( 'cf-position' ) ) + amount;
+					// newValue = Number( $( elem ).css( 'animatable' ) ) + amount;
+
+					// console.log( 'animate to ' + $( elem ).css( 'animatable' ) );
 
 					$( elem )
+						.css( 'cfposition', 0 )
 						.animate( {
-							'cf-position': newValue
+							cfposition: amount
 						},
 						{
 							step: function( now ) {
 
-								var cp = i - scp._currentItem - now,
-								trans = scp.getTransform( cp );
+								var trans = scp.getTransform( i - scp._currentItem - now );
 								$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' );
 
 							},
