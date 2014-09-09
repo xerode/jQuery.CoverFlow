@@ -35,7 +35,7 @@
 
 	test( 'plugin settings extends plugin defaults', function() {
 
-		expect( 13 );
+		expect( 14 );
 
 		this.elems.coverflow();
 
@@ -52,6 +52,7 @@
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.animationDuration, 500, 'should be 500' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.cssItemClass, 'cf-item', 'should be "cf-item"' );
 		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.easing, 'swing', 'should be "swing"' );
+		strictEqual( $( '#COVERFLOW' ).data( 'plugin_coverflow' ).settings.clamp, true, 'should be true' );
 
 	} );
 
@@ -70,7 +71,8 @@
 			zAngle: 45,
 			animationDuration: 1000,
 			cssItemClass: 'custom-cf-item',
-			easing: 'linear'
+			easing: 'linear',
+			clamp: false
 		};
 
 		expect( Object.keys( options ).length );
@@ -89,6 +91,14 @@
 		this.elems.coverflow();
 
 		strictEqual( this.elems.coverflow( 'getCurrentItem' ), 0, 'should be 0' );
+	} );
+
+	test( 'element.length is available through a public accessor method', function() {
+		expect( 1 );
+
+		this.elems.coverflow();
+
+		strictEqual( this.elems.coverflow( 'getNumItems' ), 5, 'should be 5' );
 	} );
 
 	asyncTest( 'nextItem() is available as a public method, updates currentItem and throws a "complete" event', function() {

@@ -25,7 +25,6 @@
 			transform-origin: top left;
 			top: 50%;
 			left: 50%;
-			opacity: 0.5;
 		}
 
 		.cf-item img {
@@ -55,28 +54,54 @@
 		</ul>
 		<script>
 			$( document ).ready( function() {
-				$( '#COVERFLOW' ).coverflow();
+
+				// Init coverflow plugin
+				$( '#COVERFLOW' ).coverflow( {
+					xGap: 220,
+					stagePerspective: 10
+				} );
+
+				// Init controls for coverflow
+				$( '#RESET' ).click( function( e ) {
+
+					$( '#COVERFLOW' ).coverflow( 'animateTo', 0, 1000 );
+
+					e.preventDefault();
+
+				} );
 				$( '#NEXT' ).click( function( e ) {
 
-					$( '#COVERFLOW' ).coverflow( 'animate', 1, 1000 );
+					var target = $( '#COVERFLOW' ).coverflow( 'getCurrentItem' ) + 1;
+
+					// if( target <= $( '#COVERFLOW' ).coverflow( 'getNumItems' ) - 1 ) {
+						$( '#COVERFLOW' ).coverflow( 'animateTo', target, 400 );
+					// }
 
 					e.preventDefault();
 
 				} );
 				$( '#PREV' ).click( function( e ) {
 
-					$( '#COVERFLOW' ).coverflow( 'animate', -1, 1000 );
+					var target = $( '#COVERFLOW' ).coverflow( 'getCurrentItem' ) - 1;
+
+					// if( target >= 0 ) {
+						$( '#COVERFLOW' ).coverflow( 'animateTo', target, 400 );
+					// }
 
 					e.preventDefault();
 
 				} );
 				$( '#PERSPECTIVE' ).click( function( e ) {
 
-					$( '#COVERFLOW' ).coverflow( 'changePerspective', 400, 4000 );
+					$( '#COVERFLOW' ).coverflow( 'changePerspective', 3200, 1000 );
 
 					e.preventDefault();
 
 				} );
+
+				// Kick off with a nice little animation
+				$( '#COVERFLOW' ).coverflow( 'changePerspective', 1600, 4000 );
+
 			} );
 		</script>
 	</body>

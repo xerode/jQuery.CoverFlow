@@ -25,7 +25,8 @@
 		animationDuration: 500,
 		autoResize: true,
 		cssItemClass: 'cf-item',
-		easing: 'swing'
+		easing: 'swing',
+		clamp: true
 	};
 
 	// The actual plugin constructor
@@ -36,6 +37,9 @@
 
 			this._defaults = defaults;
 			this._name = pluginName;
+
+			this._div = document.createElement( 'div' );
+			$( this._div ).css( 'line-height', this._currentItem );
 
 		// Public properties
 			this.element = element;
@@ -72,6 +76,10 @@
 
 			getCurrentItem: function() {
 				return this._currentItem;
+			},
+
+			getNumItems: function() {
+				return $( this.element ).children( '.' + this.settings.cssItemClass ).length;
 			},
 
 			nextItem: function() {
@@ -116,46 +124,39 @@
 
 			},
 
-			animate: function( amount, dur ) {
+			animateTo: function( pos, dur ) {
 
-				// console.log( 'animate' );
+				if( ( this.settings.clamp && pos >= 0 && pos <= this.getNumItems() - 1 ) || ! this.settings.clamp ) {
 
-				var scp = this,
-				nextCurrent = this._currentItem + amount,
-				items = $( this.element ).children( '.' + this.settings.cssItemClass ).length;
-				// newValue = 0;
+					var scp = this;
 
-				$( $( this.element ).children( '.' + this.settings.cssItemClass ) ).each( function( i, elem ) {
-
-					// newValue = Number( $( elem ).css( 'animatable' ) ) + amount;
-
-					// console.log( 'animate to ' + $( elem ).css( 'animatable' ) );
-
-					$( elem )
-						.css( 'cfposition', 0 )
+					$( this._div )
 						.animate( {
-							cfposition: amount
+							'line-height': pos
 						},
 						{
 							step: function( now ) {
 
-								var trans = scp.getTransform( i - scp._currentItem - now );
-								$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' );
+								var translateBy = ( now - scp._currentItem );
+
+								$( scp.element ).children( '.' + scp.settings.cssItemClass ).each( function( i, elem ) {
+
+									var trans = scp.getTransform( i - scp._currentItem - translateBy );
+									$( elem ).css( 'transform', 'translate3d(' + trans.xp + 'px,' + trans.yp + 'px,' + trans.zp + 'px) rotateY(' + trans.ye + 'deg)' );
+
+								} );
 
 							},
 							duration: dur || scp.animationDuration,
 							easing: scp.settings.easing,
 							complete: function() {
-
-								if( i === items - 1 ) {
-									scp._currentItem = nextCurrent;
-									scp._broadcast( 'complete' );
-								}
-
+								scp._currentItem = pos;
+								scp._broadcast( 'complete ' + scp._currentItem );
 							}
 						}
 					);
-				} );
+
+				}
 
 			},
 
@@ -194,21 +195,16 @@
 
 			changePerspective: function( to, dur ) {
 
-				var from = Number( $( this.element ).css( 'perspective' ).replace(/[^-\d\.]/g, '') ) || 0,
-				scp = this;
+				// var from = Number( $( this.element ).css( 'perspective' ).replace(/[^-\d\.]/g, '') ) || 0,
+				var scp = this;
 
 				$( this.element )
 					.animate( {
-						persp: to - from
+						perspective: to
 					},
 					{
-						step: function( now ) {
-
-							$( scp.element ).css( 'perspective', ( from + now ) + 'px' );
-
-						},
 						duration: dur || this.animationDuration,
-						easing: 'swing',
+						easing: scp.settings.easing,
 						complete: function() {
 
 							scp._broadcast( {
